@@ -40,8 +40,9 @@ bot.on("message", (message) => {
           .setColor("#DC143C")
           .setTitle("I didn't get it 🤔")
           .setDescription("Invalid command !!")
-          .addField("Valid Commands:", "info");
+          .addFields({ name: "Available Commands:", value: "info" });
         message.channel.send(newEmbed);
+        message.delete();
       }
     } else {
       // Keeps other bot channels clean
