@@ -7,39 +7,63 @@ const config = require("./config.json");
 
 const bot = new Discord.Client();
 const prefix = process.env.PREFIX;
-
 bot.commands = new Discord.Collection();
+
+// Loads all the command files
 const commandFiles = fs
   .readdirSync("./commands/")
   .filter((file) => file.endsWith(".js"));
 
+// Sets all loaded commands
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
   bot.commands.set(command.name, command);
 }
 
+// Bot is online
 bot.once("ready", () => {
   console.log("King's Guard has Awaken 🔥");
-  bot.user.setActivity(`${prefix}help`, { type: "LISTENING" });
+  bot.user.setActivity(`${prefix}info`, { type: "LISTENING" });
 });
 
+// Handles any incoming message
 bot.on("message", (message) => {
   if (!message.author.bot) {
-    // Handles own commands
+    // Checks for own prefix - Handles own commands
     if (message.content.startsWith(prefix)) {
       const args = message.content.slice(prefix.length).split(/ +/);
       const command = args.shift().toLowerCase();
 
-      if (command === "help") bot.commands.get("help").execute(message, args);
+      if (command === "info") bot.commands.get(command).execute(message, args);
+      else {
+        const newEmbed = new Discord.MessageEmbed()
+          .setColor("#DC143C")
+          .setTitle("I didn't get it 🤔")
+          .setDescription("Invalid command !!")
+          .addField("Valid Commands:", "info");
+        message.channel.send(newEmbed);
+      }
     } else {
       // Keeps other bot channels clean
       let channel = config.bot_channels.find(
         (channel) => channel.id == message.channel.id
       );
 
+      // Checks if message appeared bots channel or not
       if (channel != undefined) {
-        if (!message.content.startsWith(channel.prefix)) message.delete();
-        // message.delete();
+        if (!message.content.startsWith(channel.prefix)) {
+          // Sends warning message
+          const newEmbed = new Discord.MessageEmbed()
+            .setColor("#FF8C00")
+            .setTitle("This message doesn't belong here")
+            .setDescription(
+              `Only \`${channel.name} bot\` commands are allowed here !!`
+            );
+          message.channel.send(newEmbed);
+
+          // Deletes the original message
+          message.delete();
+        }
       }
     }
   }
