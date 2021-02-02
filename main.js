@@ -74,9 +74,18 @@ bot.on("message", (message) => {
         (channel) => channel.id == message.channel.id
       );
 
+      const isThisMessageAllowed = (message, prefixes) => {
+        let isAllowed = false;
+        for (const prefix of prefixes) {
+          isAllowed = message.content.startsWith(prefix);
+          if (isAllowed) break;
+        }
+        return isAllowed;
+      };
+
       // Checks if message appeared bots channel or not
       if (channel != undefined) {
-        if (!message.content.startsWith(channel.prefix)) {
+        if (!isThisMessageAllowed(message, channel.prefixes)) {
           // Sends warning message
           const newEmbed = new Discord.MessageEmbed()
             .setColor("#FF8C00")
