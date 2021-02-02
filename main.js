@@ -2,8 +2,12 @@
 
 const fs = require("fs");
 const Discord = require("discord.js");
-require("dotenv").config();
+const { CanvasSenpai } = require("canvas-senpai");
+const canva = new CanvasSenpai();
 const config = require("./config.json");
+const roleClaim = require("./role-claim");
+
+require("dotenv").config();
 
 const bot = new Discord.Client();
 const prefix = process.env.PREFIX;
@@ -20,10 +24,30 @@ for (const file of commandFiles) {
   bot.commands.set(command.name, command);
 }
 
-// Bot is online
+// Waking up the Bot
 bot.once("ready", () => {
   console.log("King's Guard has Awaken 🔥");
   bot.user.setActivity(`${prefix}info`, { type: "LISTENING" });
+  roleClaim(bot);
+});
+
+// Welcome Message & Role to new Members
+bot.on("guildMemberAdd", async (member) => {
+  let data = await canva.welcome(member, {
+    link: config.welcome_banner,
+  });
+  const attachment = new Discord.MessageAttachment(data);
+
+  member.guild.channels.cache
+    .get(config.welcome_channel)
+    .send(
+      `Hey <@${member.user.id}>, welcome to our **${
+        member.guild.name
+      }**! Please make sure to read ${member.guild.channels.cache
+        .get(config.rules_channel)
+        .toString()}`,
+      attachment
+    );
 });
 
 // Handles any incoming message
@@ -34,7 +58,7 @@ bot.on("message", (message) => {
       const args = message.content.slice(prefix.length).split(/ +/);
       const command = args.shift().toLowerCase();
 
-      if (command === "info") bot.commands.get(command).execute(message, args);
+      if (command === "info") bot.commands.get("info").execute(message, args);
       else {
         const newEmbed = new Discord.MessageEmbed()
           .setColor("#DC143C")

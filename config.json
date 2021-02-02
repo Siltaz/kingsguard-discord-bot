@@ -1,4 +1,14 @@
 {
+  "welcome_banner": "https://static.vecteezy.com/system/resources/previews/000/686/239/original/bright-gradient-black-banner-vector.jpg",
+  "welcome_channel": "753126202104873080",
+  "rules_channel": "800339243247468594",
+  "coder_roles_channel": "806169825898528808",
+  "gamer_roles_channel": "806169884987752538",
+  "role_channels": [
+    "800339243247468594",
+    "806169825898528808",
+    "806169884987752538"
+  ],
   "bot_channels": [
     {
       "id": "801797681105600512",
