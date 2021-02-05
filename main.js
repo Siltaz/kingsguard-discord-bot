@@ -31,6 +31,13 @@ bot.once("ready", () => {
   roleClaim(bot);
 });
 
+// Leave Members
+bot.on("guildMemberRemove", (member) => {
+  member.guild.channels.cache
+    .get(config.welcome_channel)
+    .send(`<@${member.user.id}> has left the server!`);
+});
+
 // Welcome Message & Role to new Members
 bot.on("guildMemberAdd", async (member) => {
   let data = await canva.welcome(member, {
