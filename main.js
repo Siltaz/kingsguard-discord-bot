@@ -34,7 +34,7 @@ bot.once("ready", () => {
 // Leave Members
 bot.on("guildMemberRemove", (member) => {
   member.guild.channels.cache
-    .get(config.welcome_channel)
+    .get(config.leave_channel)
     .send(`<@${member.user.id}> has left the server!`);
 });
 
