@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "canvas-senpai": "^1.0.0",
+    "canvas": "^2.6.1",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0"
   }

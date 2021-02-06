@@ -2,8 +2,8 @@
 
 const fs = require("fs");
 const Discord = require("discord.js");
-const { CanvasSenpai } = require("canvas-senpai");
-const canva = new CanvasSenpai();
+const path = require("path");
+const Canvas = require("canvas");
 const config = require("./config.json");
 const roleClaim = require("./role-claim");
 
@@ -40,10 +40,52 @@ bot.on("guildMemberRemove", (member) => {
 
 // Welcome Message & Role to new Members
 bot.on("guildMemberAdd", async (member) => {
-  let data = await canva.welcome(member, {
-    link: config.welcome_banner,
-  });
-  const attachment = new Discord.MessageAttachment(data);
+  const canvas = Canvas.createCanvas(700, 250);
+  const ctx = canvas.getContext("2d");
+
+  const background = await Canvas.loadImage(
+    path.join(__dirname, "./assets/banner.jpg")
+  );
+
+  let x = 0;
+  let y = 0;
+  ctx.drawImage(background, x, y);
+
+  const pfp = await Canvas.loadImage(
+    member.user.displayAvatarURL({
+      format: "png",
+    })
+  );
+
+  x = canvas.width / 2;
+  y = 25 + pfp.height / 2;
+
+  ctx.fillStyle = "#FFFFFF";
+  ctx.arc(x, y, (pfp.width+6) / 2, 0, 2 * Math.PI);
+  ctx.fill();
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(x, y, pfp.width / 2, 0, 2 * Math.PI);
+  ctx.clip();
+
+  x = canvas.width / 2 - pfp.width / 2;
+  y = 25;
+  ctx.drawImage(pfp, x, y);
+  ctx.restore();
+
+  ctx.font = "28px sans-serif";
+  let text = `${member.user.tag} just joined the server`;
+  x = canvas.width / 2 - ctx.measureText(text).width / 2;
+  ctx.fillText(text, x, 70 + pfp.height);
+
+  ctx.fillStyle = "#B4B4B4";
+  ctx.font = "22px sans-serif";
+  text = `Member #${member.guild.memberCount}`;
+  x = canvas.width / 2 - ctx.measureText(text).width / 2;
+  ctx.fillText(text, x, 100 + pfp.height);
+
+  const attachment = new Discord.MessageAttachment(canvas.toBuffer());
 
   member.guild.channels.cache
     .get(config.welcome_channel)

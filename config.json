@@ -1,5 +1,4 @@
 {
-  "welcome_banner": "https://static.vecteezy.com/system/resources/previews/000/686/239/original/bright-gradient-black-banner-vector.jpg",
   "welcome_channel": "753126202104873080",
   "leave_channel": "806191483216330822",
   "rules_channel": "800339243247468594",
@@ -19,7 +18,7 @@
     {
       "id": "801783032863260693",
       "name": "music",
-      "prefixes": ["-",";","!"]
+      "prefixes": ["-",";","!",";;"]
     }
   ]
 }
