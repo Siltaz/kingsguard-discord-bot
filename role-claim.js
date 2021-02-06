@@ -55,6 +55,8 @@ module.exports = (client) => {
       return;
     }
 
+    if (member == undefined) return;
+
     if (isAdding) member.roles.add(role);
     else {
       if (["Gamer", "Coder"].includes(role.name)) {
