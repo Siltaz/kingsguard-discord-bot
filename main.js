@@ -7,7 +7,7 @@ const client = new Discord.Client();
 const { registerCommands, registerEvents } = require("./src/utils/register");
 
 (async () => {
-  await client.login(process.env.BOT_TOKEN);
+  client.login(process.env.BOT_TOKEN);
   client.commands = new Map();
   await registerCommands(client, "../commands");
   await registerEvents(client, "../events");
