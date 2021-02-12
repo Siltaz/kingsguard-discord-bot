@@ -4,13 +4,16 @@
   "description": "Highly customizable discord server messages cleaner",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./src/bot.js",
+    "start": "node ./src/bot.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "canvas": "^2.6.1",
     "discord.js": "^12.5.1",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "mysql2": "^2.1.0"
   }
 }
