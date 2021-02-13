@@ -13,7 +13,7 @@ module.exports = class GuildMemberRemoveEvent extends BaseEvent {
       .then((result) => {
         const goodbyeChannel = result[0][0].goodbye_channel;
         const channel = member.guild.channels.cache.get(goodbyeChannel);
-        if (channel) channel.send(`**${member.user.name}** has left the server!`);
+        if (channel) channel.send(`**${member.user.tag}** has left the server!`);
       })
       .catch((err) => console.log(err));
   }
