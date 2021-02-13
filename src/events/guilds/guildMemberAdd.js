@@ -57,7 +57,7 @@ module.exports = class GuildMemberAddEvent extends BaseEvent {
       .then((result) => {
         const welcomeChannel = result[0][0].welcome_channel;
         const channel = member.guild.channels.cache.get(welcomeChannel);
-        if (channel) channel.send(`Hey <@${member.user.id}>, welcome to our **${member.guild.name}**!`, attachment);
+        if (channel) channel.send(`Hey <@${member.user.id}>, welcome to our **${member.guild.name}**! Hope u enjoy here 🤗`, attachment);
       })
       .catch((err) => console.log(err));
   }

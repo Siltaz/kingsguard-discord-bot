@@ -1,4 +1,5 @@
-// Bot Invite Link: https://discord.com/oauth2/authorize?client_id=807984309906046976&scope=bot&permissions=8
+// Dev Bot Invite Link: https://discord.com/oauth2/authorize?client_id=807984309906046976&scope=bot&permissions=8
+// Prod Bot Invite Link: https://discord.com/oauth2/authorize?client_id=801828395117445231&scope=bot&permissions=8
 
 require("dotenv").config();
 const StateManager = require('./src/utils/StateManager');
