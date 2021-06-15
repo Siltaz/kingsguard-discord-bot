@@ -2,14 +2,26 @@
 // Prod Bot Invite Link: https://discord.com/oauth2/authorize?client_id=801828395117445231&scope=bot&permissions=8
 
 require("dotenv").config();
-const StateManager = require('./src/utils/StateManager');
+
+const mongoose = require('mongoose')
 const Discord = require("discord.js");
 const client = new Discord.Client();
-const { registerCommands, registerEvents } = require("./src/utils/register");
 
-(async () => {
-  await client.login(process.env.BOT_TOKEN);
-  client.commands = new Map();
-  await registerCommands(client, "../commands");
-  await registerEvents(client, "../events");
-})();
+const seeder = require('./migration/seeder');
+
+client.commands = new Discord.Collection();
+client.events = new Discord.Collection();
+
+['command_handler', 'event_handler'].forEach(handler => {
+  require(`./handlers/${handler}`)(Discord, client);
+})
+
+mongoose.connect(process.env.MONGODB_SRV, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
+})
+  .then(() => console.log('Connected to database.'))
+  .catch(err => console.log(err));
+
+client.login(process.env.BOT_TOKEN);
