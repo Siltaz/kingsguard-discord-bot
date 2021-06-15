@@ -7,8 +7,6 @@ const mongoose = require('mongoose')
 const Discord = require("discord.js");
 const client = new Discord.Client();
 
-const seeder = require('./migration/seeder');
-
 client.commands = new Discord.Collection();
 client.events = new Discord.Collection();
 
