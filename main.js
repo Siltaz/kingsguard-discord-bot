@@ -17,7 +17,8 @@ client.events = new Discord.Collection();
 mongoose.connect(process.env.MONGODB_SRV, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useFindAndModify: false
+  useFindAndModify: false,
+  useCreateIndex: true
 })
   .then(() => console.log('Connected to database.'))
   .catch(err => console.log(err));
