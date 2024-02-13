@@ -14,12 +14,7 @@ client.events = new Discord.Collection();
   require(`./handlers/${handler}`)(Discord, client);
 })
 
-mongoose.connect(process.env.MONGODB_SRV, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true
-})
+mongoose.connect(process.env.MONGODB_SRV)
   .then(() => console.log('Connected to database.'))
   .catch(err => console.log(err));
 

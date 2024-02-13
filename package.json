@@ -10,10 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "canvas": "^2.6.1",
+    "canvas": "^2.11.2",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
-    "mongoose": "^5.12.13",
-    "mysql2": "^2.1.0"
+    "mongoose": "^8.1.2"
+  },
+  "overrides": {
+    "semver": "7.6.0"
   }
 }
